@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Menu | Cooking Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0f0f0f;
+    color:#fff;
+}
+
+/* HERO */
+.hero{
+    height:55vh;
+    background:url("https://images.unsplash.com/photo-1600628422019-3a87f2f4e00b") center/cover no-repeat;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+}
+
+.hero-content{
+    position:relative;
+    text-align:center;
+}
+
+.hero-content h1{
+    font-size:46px;
+}
+
+.hero-content p{
+    margin-top:10px;
+    opacity:0.9;
+}
+
+/* MENU */
+.menu{
+    padding:60px 10%;
+}
+
+.menu h2{
+    text-align:center;
+    font-size:36px;
+    margin-bottom:40px;
+    color:#ff9800;
+}
+
+/* MENU LIST */
+.menu-list{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+/* MENU ITEM */
+.menu-item{
+    display:flex;
+    gap:20px;
+    background:#1a1a1a;
+    padding:15px;
+    border-radius:12px;
+    align-items:center;
+    transition:transform 0.3s;
+}
+
+.menu-item:hover{
+    transform:scale(1.02);
+}
+
+.menu-item img{
+    width:120px;
+    height:120px;
+    border-radius:10px;
+    object-fit:cover;
+}
+
+.menu-info{
+    flex:1;
+}
+
+.menu-info h3{
+    font-size:20px;
+}
+
+.menu-info p{
+    font-size:14px;
+    opacity:0.8;
+    margin:5px 0;
+}
+
+.price{
+    color:#ff9800;
+    font-weight:600;
+}
+
+.menu-item button{
+    padding:8px 18px;
+    background:#ff9800;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+/* LOADER */
+.loader{
+    text-align:center;
+    margin-top:40px;
+    opacity:0.6;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Our Menu</h1>
+        <p>Authentic Indian food made fresh every day</p>
+    </div>
+</section>
+
+<section class="menu">
+    <h2>Indian Specials</h2>
+
+    <div class="menu-list" id="menuList"></div>
+
+    <div class="loader" id="loader">Loading more dishes...</div>
+</section>
+
+<script>
+const menuList = document.getElementById("menuList");
+
+const dishes = [
+ {name:"Paneer Butter Masala", img:"https://images.unsplash.com/photo-1631515243349-e0cb75fb8d7a", price:"₹240"},
+ {name:"Chicken Biryani", img:"https://images.unsplash.com/photo-1626776877221-35a9c06f64a9", price:"₹280"},
+ {name:"Masala Dosa", img:"https://images.unsplash.com/photo-1589302168068-964664d93dc0", price:"₹120"},
+ {name:"Chole Bhature", img:"https://images.unsplash.com/photo-1612874742237-6526221588e3", price:"₹160"},
+ {name:"Rajma Chawal", img:"https://images.unsplash.com/photo-1600628422019-3a87f2f4e00b", price:"₹180"},
+ {name:"Butter Naan", img:"https://images.unsplash.com/photo-1628294896516-344152572ee8", price:"₹40"},
+ {name:"Veg Thali", img:"https://images.unsplash.com/photo-1626074353765-517a681e40be", price:"₹220"},
+ {name:"Gulab Jamun", img:"https://images.unsplash.com/photo-1612197527762-5dfc6f7c9b83", price:"₹90"},
+ {name:"Samosa", img:"https://images.unsplash.com/photo-1601050690597-2d5c7b3c9a64", price:"₹20"}
+];
+
+let index = 0;
+const loadCount = 3;
+
+function loadMenu(){
+    for(let i=0;i<loadCount;i++){
+        if(index >= dishes.length) return;
+
+        const d = dishes[index];
+        const item = document.createElement("div");
+        item.className = "menu-item";
+        item.innerHTML = `
+            <img src="${d.img}">
+            <div class="menu-info">
+                <h3>${d.name}</h3>
+                <p>Freshly prepared authentic Indian dish</p>
+                <div class="price">${d.price}</div>
+            </div>
+            <button>Add</button>
+        `;
+        menuList.appendChild(item);
+        index++;
+    }
+}
+
+loadMenu();
+
+window.addEventListener("scroll", ()=>{
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 100){
+        loadMenu();
+    }
+});
+</script>
+
+</body>
+</html>

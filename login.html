@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Cooking Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .login-box {
+            background: #111;
+            width: 360px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff9800;
+            letter-spacing: 1px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        .input-box label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+            color: #bbb;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background: #222;
+            color: #fff;
+            font-size: 15px;
+        }
+
+        .input-box input:focus {
+            border: 1px solid #ff9800;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ff9800;
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: #ffa726;
+        }
+
+        .note {
+            margin-top: 15px;
+            font-size: 12px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <h2>Login</h2>
+
+        <div class="input-box">
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+
+        <div class="input-box">
+            <label>Mobile Number</label>
+            <input type="number" id="number" placeholder="Enter mobile number">
+        </div>
+
+        <button class="login-btn" onclick="saveLogin()">Login</button>
+
+        <p class="note">Details will be saved securely</p>
+    </div>
+
+    <script>
+        function saveLogin() {
+            let name = document.getElementById("name").value.trim();
+            let number = document.getElementById("number").value.trim();
+
+            if (name === "" || number === "") {
+                alert("Please fill all details");
+                return;
+            }
+
+            // Save in localStorage
+            let loginData = {
+                name: name,
+                number: number,
+                time: new Date().toLocaleString()
+            };
+
+            localStorage.setItem("loginData", JSON.stringify(loginData));
+
+            // Save to file (download)
+            let textData =
+                "Login Details\n" +
+                "-------------------\n" +
+                "Name: " + name + "\n" +
+                "Mobile: " + number + "\n" +
+                "Time: " + loginData.time;
+
+            let blob = new Blob([textData], { type: "text/plain" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "login_details.txt";
+            link.click();
+
+             alert("Login successful & details saved!");
+
+    // Redirect to dashboard
+    window.location.href = "index.html";
+}
+    </script>
+
+</body>
+</html>
